@@ -7,23 +7,25 @@ import { useAuthentication } from "../customHooks/Authentication";
 import { useDispatch, useSelector } from "react-redux";
 import { getAuthUser } from "../redux/auth/AuthAction";
 import { useNavigate } from "react-router-dom";
+import { getlocalstorage } from "../localstorage/storage";
 
 const Login = () => {
-  const { userInfo, error } = useSelector((state) => state.Auth);
+  // const { userInfo, error } = useSelector((state) => state.Auth);
   const [loading, setloading] = useState(true);
   const redirectPath = localStorage.getItem("redirectPath");
+  const userInfo = getlocalstorage("userInfo");
   const navigate = useNavigate();
   useEffect(() => {
     setloading(true);
     // const user = getlocalstorage("user");
     // console.log(user);
-    const token = localStorage.getItem("token");
 
-    if (token) {
+    if (userInfo) {
+      navigate("/products");
       // console.log(user, "pass and user ");
       // setAuthenticatedUser(user);
       // dispatch(setUser(user));
-      // dispatch(getAuthUser())
+      // dispatch(getAuthUser(userInfo));
       if (redirectPath) {
         navigate(redirectPath);
       } else {
@@ -31,7 +33,7 @@ const Login = () => {
       }
     }
     setloading(false);
-  }, []);
+  }, [userInfo]);
   // useEffect(() => {
   //   if (userInfo) {
   //     navigate("/products");
@@ -52,8 +54,11 @@ const Login = () => {
         console.log(email, password, "emailand pas");
         // login(email, password);
         const data = { email, password };
-        dispatch(getAuthUser(data));
-        userInfo ? navigate("/products") : navigate("/");
+        dispatch(getAuthUser(data)).then(() => {
+          const redirePath = localStorage.getItem("redirectPath");
+          navigate(redirePath);
+        });
+        // userInfo ? navigate("/products") : navigate("/");
 
         // makeLoginRequest(email, pass);
       } else {
