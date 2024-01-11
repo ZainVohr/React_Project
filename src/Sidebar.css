@@ -1,0 +1,51 @@
+/* .Sidebar {
+    display: flex;
+    height: 100vh;
+
+} */
+
+.content {
+    display: flex;
+    flex-direction: row;
+
+}
+
+.sidebarr {
+    position: fixed;
+    top: 87px;
+    left: 0;
+    width: 250px;
+    height: 100%;
+    background-color: gray;
+    color: #fff;
+    padding: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    z-index: 2;
+}
+
+.list {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+li:hover {
+    background-color: whitesmoke;
+}
+
+.search {
+    padding: 5px;
+    margin: 10px;
+    width: 200px;
+}
+
+/* Media query to switch to a narrower sidebar on smaller screens */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 150px;
+    }
+}
