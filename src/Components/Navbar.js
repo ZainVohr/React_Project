@@ -18,6 +18,7 @@ const Navbar = () => {
     removelocalstorage("userToken");
 
     // removelocalstorage("pass");
+    removelocalstorage("cartItems");
     removelocalstorage("redirectPath");
     // navigate("/");
   };

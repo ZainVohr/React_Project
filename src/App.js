@@ -12,6 +12,7 @@ import Cart from "./Components/Cart";
 import Register from "./Pages/Register";
 import AuthUser from "./Pages/AuthUser";
 import Homee from "./Components/Homee";
+import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
 
 function App() {
   return (
@@ -20,6 +21,9 @@ function App() {
       <div className="App">
         <Navbar />
         <Routes>
+          <Route element={<ProtectedRoute />}>
+            <Route path="/auth/users" element={<AuthUser />}></Route>
+          </Route>
           <Route path="/Homee" element={<Homee />} />
           <Route path="/Home" element={<Home />} />
           <Route path="/" element={<Mainpage />}></Route>
@@ -28,7 +32,8 @@ function App() {
           <Route path="/search" element={<Search />}></Route>
           <Route path="/cart" element={<Cart />}></Route>
           <Route path="/register" element={<Register />}></Route>
-          <Route path="/auth/users" element={<AuthUser />}></Route>
+          {/* <Route path="/auth/users" element={<AuthUser />}></Route> */}
+          <Route path="*" element={<p>There's nothing here: 404!</p>} />
         </Routes>
       </div>
     </BrowserRouter>

@@ -19,8 +19,8 @@ const useCategoryApi = (url) => {
     try {
       if (CategoryData.length === 0) {
         console.log(CategoryData);
-        const response = await fetch(url);
-        const Data = await response.json();
+        const response = await axios.get(url);
+        const Data = response.data;
         // console.log(data.products.length, "BEFORE json")
         dispatch(setData(Data));
       }
