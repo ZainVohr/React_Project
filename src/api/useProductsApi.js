@@ -6,6 +6,7 @@ import {
   setProductLoading,
   setProductData,
 } from "../redux/productSlice";
+import axios from "axios";
 
 const useProductsApi = (url) => {
   const { data, loading, error } = useSelector((state) => {
@@ -16,8 +17,8 @@ const useProductsApi = (url) => {
     dispatch(setProductLoading(true));
     try {
       if (data.length === 0) {
-        const response = await fetch(url);
-        const data = await response.json();
+        const response = await axios.get(url);
+        const data = response.data;
         // console.log(data.products.length, "BEFORE json")
         dispatch(setProductData(data));
       }

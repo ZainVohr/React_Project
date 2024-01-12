@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { LogoutOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Spin, Avatar } from "antd";
 import { getlocalstorage, removelocalstorage } from "../localstorage/storage";
@@ -7,16 +7,20 @@ import { selectUser } from "../redux/usersSlice";
 import "../App.css";
 const Navbar = () => {
   const authh = useSelector((state) => state.Auth);
+  const userInfo = getlocalstorage("userInfo");
   const isLoggedIn = getlocalstorage("user");
+  const navigate = useNavigate();
   const token = localStorage.getItem("userToken");
   console.log(authh.userInfo, "userinfo");
+
   const handlelogout = () => {
-    // removelocalstorage("user");
+    removelocalstorage("userInfo");
     removelocalstorage("userToken");
 
     // removelocalstorage("pass");
+    removelocalstorage("cartItems");
     removelocalstorage("redirectPath");
-    window.location.href = "/";
+    // navigate("/");
   };
 
   const { cartTotalQuantity } = useSelector((state) => {
@@ -43,12 +47,17 @@ const Navbar = () => {
         {token ? (
           <>
             <div className="right-section">
-              <span
-                style={{ color: "white" }}
-              >{`${authh.userInfo.firstName} ${authh.userInfo.lastName}`}</span>
+              <Link to={"/auth/users"}>
+                <Button type="link">
+                  <span
+                  // style={{ color: "white" }}
+                  >{`${userInfo.firstName} ${userInfo.lastName}`}</span>
+                </Button>
+              </Link>
+
               <img
-                src={authh.userInfo.image}
-                alt={`Avatar of ${authh.userInfo.firstName}`}
+                src={userInfo.image}
+                alt={`Avatar of ${userInfo.firstName}`}
                 style={{ width: "50px", height: "50px", color: "white" }}
               />
             </div>
